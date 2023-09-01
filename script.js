@@ -13,10 +13,7 @@ function getComputerChoice() {
   }
 }
 
-console.log(getComputerChoice());
-
 function playRound(playerSelection, computerSelection) {
-  // your code here!
   if (playerSelection === computerSelection) {
     return "It's a tie!";
   } else if (
@@ -30,6 +27,35 @@ function playRound(playerSelection, computerSelection) {
   }
 }
 
-const playerSelection = 'rock';
+const playerSelection = prompt('Enter rock, paper, or scissors:');
 const computerSelection = getComputerChoice();
+
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+    
+    for (let i = 0; i < 5; i++) {
+        const playerSelection = prompt("Enter rock, paper, or scissors:");
+        const computerSelection = getComputerChoice();
+        
+        const result = playRound(playerSelection, computerSelection);
+        console.log(result);
+        
+        if (result.startsWith("You win!")) {
+            playerScore++;
+        } else if (result.startsWith("You lose!")) {
+            computerScore++;
+        }
+    }
+    
+    if (playerScore > computerScore) {
+        console.log(`You win the game! ${playerScore} to ${computerScore}.`);
+    } else if (playerScore < computerScore) {
+        console.log(`You lose the game! ${computerScore} to ${playerScore}.`);
+    } else {
+        console.log(`It's a tie! ${playerScore} to ${computerScore}.`);
+    }
+}
+
 console.log(playRound(playerSelection, computerSelection));
+console.log(game())
