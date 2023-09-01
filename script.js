@@ -12,7 +12,7 @@ function getComputerChoice() {
     return getComputerChoice();
   }
 }
-
+//Play round function
 function playRound(playerSelection, computerSelection) {
   if (playerSelection === computerSelection) {
     return "It's a tie!";
@@ -26,36 +26,64 @@ function playRound(playerSelection, computerSelection) {
     return `You lose! ${computerSelection} beats ${playerSelection}.`;
   }
 }
+let computerSelection = getComputerChoice();
+// let playerSelection = '';
+// Getting Elements
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
 
-const playerSelection = prompt('Enter rock, paper, or scissors:');
-const computerSelection = getComputerChoice();
-
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
-    
-    for (let i = 0; i < 5; i++) {
-        const playerSelection = prompt("Enter rock, paper, or scissors:");
-        const computerSelection = getComputerChoice();
-        
-        const result = playRound(playerSelection, computerSelection);
-        console.log(result);
-        
-        if (result.startsWith("You win!")) {
-            playerScore++;
-        } else if (result.startsWith("You lose!")) {
-            computerScore++;
-        }
+//Function to return clicked option
+// let result = '';
+let counterPlayer = 0;
+let counterComp = 0;
+function runGame(event) {
+  let choice = event.currentTarget.getAttribute('id');
+  result = playRound(choice, getComputerChoice());
+  //Checking for 5 points
+  if (counterPlayer < 5 && counterComp < 5) {
+    if (result.includes('win')) {
+      counterPlayer += 1;
+      dispResult(result);
+    } else if (result.includes('lose')) {
+      counterComp += 1;
+      dispResult(result);
     }
-    
-    if (playerScore > computerScore) {
-        console.log(`You win the game! ${playerScore} to ${computerScore}.`);
-    } else if (playerScore < computerScore) {
-        console.log(`You lose the game! ${computerScore} to ${playerScore}.`);
-    } else {
-        console.log(`It's a tie! ${playerScore} to ${computerScore}.`);
+  } else {
+    if (counterPlayer === 5) {
+      alert('Player has won');
+      console.log('Player has won')
+    } else if (counterComp === 5) {
+      alert('Comp has won');
+      console.log('Comp has won')
     }
+  }
 }
 
-console.log(playRound(playerSelection, computerSelection));
-console.log(game())
+//Create function for text and div
+function dispResult(result) {
+  let div1 = document.createElement('div');
+  let text1 = document.createTextNode(result + " " + counterPlayer +":" + counterComp);
+  div1.appendChild(text1);
+  document.body.append(div1);
+}
+//AddEvent
+rock.addEventListener('click', runGame);
+paper.addEventListener('click', runGame);
+scissors.addEventListener('click', runGame);
+
+// if (counterPlayer < 5 || counterComp < 5) {
+//   if (result.includes('win')) {
+//     counterPlayer += 1;
+//     dispResult(result);
+//   } else if (result.includes('lose')) {
+//     counterComp += 1;
+//     dispResult(result);
+//   }
+// } else {
+//   if (counterPlayer == 5) {
+//     alert('Player has won');
+//   } else if (counterComp == 5) {
+//     alert('Comp has won');
+//   }
+// }
